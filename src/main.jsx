@@ -4,6 +4,8 @@ import './index.css'
 import App from './App.jsx'
 import Home from './Pages/Home.jsx'
 import { RouterProvider, createBrowserRouter } from 'react-router-dom'
+import JobPost from './Pages/JobPost.jsx'
+import JobDetails from './Pages/JobDetails.jsx'
 
 const router = createBrowserRouter([
   {
@@ -13,6 +15,18 @@ const router = createBrowserRouter([
       {
         path: '',
         element: <Home />
+      },
+      {
+        path:'/post-job',
+        element:<JobPost/>
+      },
+      {
+        path:'/job-posting',
+        element:<JobDetails/>
+      },
+      {
+        path: '/jobs/details/:id',
+        element:<JobDetails/>
       }
     ]
   }

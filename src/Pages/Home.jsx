@@ -1,7 +1,7 @@
 import React from 'react'
-import { NavLink } from 'react-router-dom'
 import useFetch from '../hooks/useFetch';
 import JobCard from './JobCard';
+import Navbar from "./Navbar"
 
 const Home = () => {
   const API_URL = import.meta.env.VITE_API_URL;
@@ -10,44 +10,7 @@ const Home = () => {
   console.log(data);
   return (
     <div>
-      <nav className='bg-blue-400 text-white text-2xl py-5'>
-        <ul className='flex gap-10'>
-          <li className='mx-10'>
-            <NavLink
-              to="/"
-              className={({ isActive }) =>
-                isActive ? "opacity-100" : "opacity-50"
-              }
-            >
-              InternShala
-            </NavLink>
-          </li>
-
-          <div className='flex items-center gap-5'>
-            <li>
-              <NavLink
-                to="/job-posting"
-                className={({ isActive }) =>
-                  isActive ? "opacity-100" : "opacity-50"
-                }
-              >
-                Job Posting
-              </NavLink>
-            </li>
-
-            <li>
-              <NavLink
-                to="/post-job"
-                className={({ isActive }) =>
-                  isActive ? "opacity-100" : "opacity-50"
-                }
-              >
-                Post a job
-              </NavLink>
-            </li>
-          </div>
-        </ul>
-      </nav>
+      <Navbar/>
       <div>
         <input type='text' placeholder='Search by job title...'
           className="w-1/2 px-4 py-3 my-5 mx-5 border border-gray-50 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400"/>
@@ -59,6 +22,7 @@ const Home = () => {
         {data?.jobResponse?.map((job, index) => (
           <JobCard
             key={index}
+            id={job._id}
             title={job.title}
             company={job.company}
             location={job.location}

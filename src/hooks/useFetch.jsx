@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from 'react'
 
-const useFetch = (url) => {
+const useFetch = (url,options) => {
     const [data,setData] = useState(null);
     const [loading,setLoading] = useState(true);
     const [error,setError] = useState(null);
 
-  const fetchData = async()=>{
+  const fetchData = async(customOptions)=>{
     try{
         setLoading(true);
         setError(null);
 
-        const response = await fetch(url);
+        const response = await fetch(url, customOptions || options);
         console.log(response);
 
         if(!response.ok){
@@ -26,6 +26,9 @@ const useFetch = (url) => {
   };
 
   useEffect(()=>{
+     if (!options?.method || options.method.toUpperCase() === "GET") {
+      fetchData();
+    }
     if(url) fetchData();
   },[url]);
 
