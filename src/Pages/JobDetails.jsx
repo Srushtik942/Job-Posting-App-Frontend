@@ -3,17 +3,19 @@ import { useParams } from "react-router-dom";
 import Navbar from "./Navbar";
 
 export default function JobDetails() {
-  const { id } = useParams();             // <-- get ID from URL
+  const { id } = useParams();            
   const [job, setJob] = useState(null);
+  const API_URL = import.meta.env.VITE_API_URL;
+
 
   useEffect(() => {
     const fetchJobDetails = async () => {
       try {
         const res = await fetch(
-          `https://job-posting-app-lime.vercel.app/jobs/details/${id}`
+          `${API_URL}/jobs/details/${id}`
         );
 
-        const data = await res.json();     // <-- CORRECT (no JSON.parse)
+        const data = await res.json();
         console.log("JOB DETAILS:", data);
 
         setJob(data.jobDetails);

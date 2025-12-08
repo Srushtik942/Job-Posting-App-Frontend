@@ -34,6 +34,7 @@ const PostJob = () => {
       });
 
       const result = await response.json();
+      
 
       if (!response.ok) {
         alert(result.error || "Failed to post job");

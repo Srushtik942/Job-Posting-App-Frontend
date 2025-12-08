@@ -1,8 +1,31 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
-const JobCard = ({id, title, company, location, type }) => {
+const JobCard = ({id, title, company, location, type, onDelete }) => {
   const navigate = useNavigate();
+    const API_URL = import.meta.env.VITE_API_URL;
+
+
+  const handleDelete = async()=>{
+    try{
+
+      const res = await fetch(`${API_URL}/jobs/${id}`, {
+        method: "DELETE",
+      });
+
+        const data = await res.json();
+      console.log(data);
+
+      if (res.ok) {
+        if (onDelete) onDelete(id);
+      } else {
+        alert(data.message || "Failed to delete job");
+      }
+    }catch(error){
+            console.error("Delete error:", error);
+    }
+  }
+
   return (
     <div className="border rounded-xl shadow-sm p-5 bg-white">
       <h2 className="text-xl font-semibold">{title}</h2>
@@ -26,7 +49,9 @@ const JobCard = ({id, title, company, location, type }) => {
           See Details
         </button>
 
-        <button className="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 cursor-pointer">
+        <button
+        onClick={handleDelete}
+        className="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 cursor-pointer">
           Delete
         </button>
       </div>
