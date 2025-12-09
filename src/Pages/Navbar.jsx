@@ -1,49 +1,60 @@
-import React from 'react'
-import { NavLink } from 'react-router-dom'
+import React, { useState } from 'react';
+import { NavLink } from 'react-router-dom';
 
 const Navbar = () => {
+  const [menuOpen, setMenuOpen] = useState(false);
+
   return (
-    <div>
-      <nav className='bg-blue-400 text-white text-2xl py-5'>
-        <ul className='flex gap-10'>
-          <li className='mx-10'>
+    <nav className="bg-blue-500 text-white px-6 py-4 shadow-md">
+      <div className="flex justify-between items-center">
+
+        {/* Brand */}
+        <NavLink to="/" className="text-2xl font-bold">
+          InternShala
+        </NavLink>
+
+        <button
+          className="lg:hidden text-white text-3xl focus:outline-none"
+          onClick={() => setMenuOpen(!menuOpen)}
+        >
+          ☰
+        </button>
+
+        {/* Desktop Menu */}
+        <ul className="hidden lg:flex gap-10 text-xl">
+
+          <li>
             <NavLink
-              to="/"
+              to="/post-job"
               className={({ isActive }) =>
-                isActive ? "opacity-100" : "opacity-50"
+                isActive ? "opacity-100" : "opacity-60"
               }
             >
-              InternShala
+              Post a Job
             </NavLink>
           </li>
-
-          <div className='flex items-center gap-5'>
-            <li>
-              <NavLink
-                to="/job-posting"
-                className={({ isActive }) =>
-                  isActive ? "opacity-100" : "opacity-50"
-                }
-              >
-                Job Posting
-              </NavLink>
-            </li>
-
-            <li>
-              <NavLink
-                to="/post-job"
-                className={({ isActive }) =>
-                  isActive ? "opacity-100" : "opacity-50"
-                }
-              >
-                Post a job
-              </NavLink>
-            </li>
-          </div>
         </ul>
-      </nav>
-    </div>
-  )
-}
+      </div>
 
-export default Navbar
+      {/* Mobile Menu */}
+      {menuOpen && (
+        <ul className="lg:hidden flex flex-col mt-4 gap-4 text-lg">
+
+          <li>
+            <NavLink
+              to="/post-job"
+              onClick={() => setMenuOpen(false)}
+              className={({ isActive }) =>
+                isActive ? "opacity-100" : "opacity-60"
+              }
+            >
+              Post a Job
+            </NavLink>
+          </li>
+        </ul>
+      )}
+    </nav>
+  );
+};
+
+export default Navbar;

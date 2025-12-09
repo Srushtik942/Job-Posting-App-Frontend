@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import useFetch from '../hooks/useFetch';
+import { useNavigate } from "react-router-dom";
 import JobCard from './JobCard';
 import Navbar from "./Navbar";
 
@@ -8,6 +9,8 @@ const Home = () => {
 
 
   const [jobs, setJobs] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
+  const navigate = useNavigate();
 
   const { data, loading, error } = useFetch(`${API_URL}/jobs`);
 
@@ -21,6 +24,28 @@ const Home = () => {
     setJobs(prev => prev.filter(job => job._id !== id));
   };
 
+ const handleTitleChange = async (e) => {
+  const value = e.target.value;
+  setSearchTerm(value);
+
+  if (value.trim().length > 0) {
+      navigate(`${API_URL}/jobs/search?title=${value}`);
+    return;
+  }
+
+  try {
+    const res = await fetch(`${API_URL}/jobs/title?title=${value}`);
+    const json = await res.json();
+
+    if (json?.jobResponse) {
+      setJobs(json.jobResponse);
+    }
+  } catch (error) {
+    console.log("Error fetching title", error);
+  }
+};
+
+
   return (
     <div>
       <Navbar/>
@@ -29,6 +54,7 @@ const Home = () => {
         <input
           type='text'
           placeholder='Search by job title...'
+          onChange={handleTitleChange}
           className="w-1/2 px-4 py-3 my-5 mx-5 border border-gray-50 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
         />
       </div>

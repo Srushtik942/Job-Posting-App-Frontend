@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Navbar from "./Navbar";
+import toast from "react-hot-toast";
 
 const PostJob = () => {
   const API_URL = import.meta.env.VITE_API_URL;
@@ -34,7 +35,7 @@ const PostJob = () => {
       });
 
       const result = await response.json();
-      
+
 
       if (!response.ok) {
         alert(result.error || "Failed to post job");
@@ -42,7 +43,7 @@ const PostJob = () => {
         return;
       }
 
-      alert("Job posted successfully!");
+      toast.success("Job posted successfully!");
 
       // Reset form
       setJobData({
@@ -58,7 +59,7 @@ const PostJob = () => {
       console.log("Job Posted:", result);
     } catch (error) {
       console.error("Error posting job:", error);
-      alert("Something went wrong!");
+      toast.error("Something went wrong!");
     } finally {
       setLoading(false);
     }

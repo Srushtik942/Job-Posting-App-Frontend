@@ -6,6 +6,7 @@ import Home from './Pages/Home.jsx'
 import { RouterProvider, createBrowserRouter } from 'react-router-dom'
 import JobPost from './Pages/JobPost.jsx'
 import JobDetails from './Pages/JobDetails.jsx'
+import SearchResults from './Pages/SearchResults.jsx'
 
 const router = createBrowserRouter([
   {
@@ -20,13 +21,17 @@ const router = createBrowserRouter([
         path:'/post-job',
         element:<JobPost/>
       },
-      {
-        path:'/job-posting',
-        element:<JobDetails/>
-      },
+      // {
+      //   path:'/job-posting',
+      //   element:<JobDetails/>
+      // },
       {
         path: '/jobs/details/:id',
         element:<JobDetails/>
+      },
+      {
+        path:'/jobs/search',
+        element:<SearchResults/>
       }
     ]
   }

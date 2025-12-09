@@ -1,7 +1,8 @@
 import React from "react";
+import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 
-const JobCard = ({id, title, company, location, type, onDelete }) => {
+const JobCard = ({id, title, company, location, type, onDelete, showDelete = true,  showUpdate = true  }) => {
   const navigate = useNavigate();
     const API_URL = import.meta.env.VITE_API_URL;
 
@@ -14,12 +15,12 @@ const JobCard = ({id, title, company, location, type, onDelete }) => {
       });
 
         const data = await res.json();
-      console.log(data);
+         console.log(data);
 
       if (res.ok) {
         if (onDelete) onDelete(id);
       } else {
-        alert(data.message || "Failed to delete job");
+        toast.error(data.message || "Failed to delete job");
       }
     }catch(error){
             console.error("Delete error:", error);
